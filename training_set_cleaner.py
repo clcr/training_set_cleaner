@@ -16,10 +16,15 @@ def fix_class_id_from_name(shape_path, id_field, name_field, name_to_id_dict):
         match = get_close_matches(name, name_to_id_dict.keys(), n = 1)[0]
         try:
             print("Setting {} to id value {}".format(name, name_to_id_dict[match]))
-            feature.SetFieldInteger64(name_to_id_dict[match])
+            feature.SetField(id_field, name_to_id_dict[match])
         except KeyError:
             print("No match for {} found in name_to_id_dict".format(name))
-            
+        layer.SetFeature(feature)
+        feature = None
+    layer = None
+    shapefile = None
+
+    
 if __name__ == "__main__":
     
     name_to_id_dict = {
