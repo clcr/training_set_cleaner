@@ -1,4 +1,3 @@
-import diffllib   # Fuzzy string matching lib
 import ogr
 from difflib import get_close_matches
 from logging import logger
@@ -14,7 +13,7 @@ def fix_class_id_from_name(shape_path, id_field, name_field, name_to_id_dict):
     for feature in layer:
         # If the name of a feature is within match_threshold of a key in name_to_id_dict, update id_field
         name = feature.GetField(name_field)
-        match = get_close_matches(name, name_to_id_dict.keys(), n = 1).first()
+        match = get_close_matches(name, name_to_id_dict.keys(), n = 1)[0]
         try:
             print("Setting {} to id value {}".format(name, name_to_id_dict[match]))
             feature.SetFieldInteger64(name_to_id_dict[match])
